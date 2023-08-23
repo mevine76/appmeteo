@@ -1,3 +1,6 @@
+// // Importez la bibliothèque js-cookie
+// import 'https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/src/js.cookie.mjs';
+
 //state
 let currCity = 'London';
 let units = 'metric';
@@ -46,61 +49,61 @@ document.querySelector('.weather_unit_farenheit').addEventListener('click', () =
     }
 })
 
-// Fonction pour ajouter une ville aux favoris
-function addToFavorites(city) {
-    // Vérifiez si la ville est déjà dans les favoris
-    const favorites = Cookies.getJSON('favorites') || [];
-    if (!favorites.includes(city)) {
-       favorites.push(city);
-       Cookies.set('favorites', favorites);
-    }
- }
+// // Fonction pour ajouter une ville aux favoris
+// function addToFavorites(city) {
+//     // Vérifiez si la ville est déjà dans les favoris
+//     const favorites = Cookies.getJSON('favorites') || [];
+//     if (!favorites.includes(city)) {
+//        favorites.push(city);
+//        Cookies.set('favorites', favorites);
+//     }
+//  }
 
-// Fonction pour supprimer une ville des favoris
-function removeFromFavorites(city) {
-    // Récupérez la liste des favoris
-    const favorites = Cookies.getJSON('favorites') || [];
-    // Supprimez la ville de la liste
-    const index = favorites.indexOf(city);
-    if (index !== -1) {
-       favorites.splice(index, 1);
-       Cookies.set('favorites', favorites);
-    }
- }
+// // Fonction pour supprimer une ville des favoris
+// function removeFromFavorites(city) {
+//     // Récupérez la liste des favoris
+//     const favorites = Cookies.getJSON('favorites') || [];
+//     // Supprimez la ville de la liste
+//     const index = favorites.indexOf(city);
+//     if (index !== -1) {
+//        favorites.splice(index, 1);
+//        Cookies.set('favorites', favorites);
+//     }
+//  }
 
-// Fonction pour afficher les villes favorites
-function displayFavorites() {
-    const favoritesList = document.querySelector('.favorites-list');
-    // Récupérez la liste des favoris depuis les cookies
-    const favorites = Cookies.getJSON('favorites') || [];
-    // Affichez les favoris dans l'interface utilisateur
-    favoritesList.innerHTML = '';
-    favorites.forEach(city => {
-       const listItem = document.createElement('li');
-       listItem.textContent = city;
-       // Ajoutez un bouton pour supprimer la ville des favoris
-       const removeButton = document.createElement('button');
-       removeButton.textContent = 'Supprimer des favoris';
-       removeButton.addEventListener('click', () => {
-          removeFromFavorites(city);
-          displayFavorites();
-       });
-       listItem.appendChild(removeButton);
-       favoritesList.appendChild(listItem);
-    });
- }
+// // Fonction pour afficher les villes favorites
+// function displayFavorites() {
+//     const favoritesList = document.querySelector('.favorites-list');
+//     // Récupérez la liste des favoris depuis les cookies
+//     const favorites = Cookies.getJSON('favorites') || [];
+//     // Affichez les favoris dans l'interface utilisateur
+//     favoritesList.innerHTML = '';
+//     favorites.forEach(city => {
+//        const listItem = document.createElement('li');
+//        listItem.textContent = city;
+//        // Ajoutez un bouton pour supprimer la ville des favoris
+//        const removeButton = document.createElement('button');
+//        removeButton.textContent = 'Supprimer des favoris';
+//        removeButton.addEventListener('click', () => {
+//           removeFromFavorites(city);
+//           displayFavorites();
+//        });
+//        listItem.appendChild(removeButton);
+//        favoritesList.appendChild(listItem);
+//     });
+//  }
 
- // Exemple d'utilisation pour ajouter une ville aux favoris
-document.querySelector('.add-to-favorites-button').addEventListener('click', () => {
-    const cityName = currCity; // Utilisez la ville actuelle comme exemple
-    addToFavorites(cityName);
-    displayFavorites();
- });
+//  // Exemple d'utilisation pour ajouter une ville aux favoris
+// document.querySelector('.add-to-favorites-button').addEventListener('click', () => {
+//     const cityName = currCity; // Utilisez la ville actuelle comme exemple
+//     addToFavorites(cityName);
+//     displayFavorites();
+//  });
  
-// Exemple d'utilisation pour afficher les villes favorites au chargement de la page
-document.addEventListener('DOMContentLoaded', () => {
-    displayFavorites();
- });
+// // Exemple d'utilisation pour afficher les villes favorites au chargement de la page
+// document.addEventListener('DOMContentLoaded', () => {
+//     displayFavorites();
+//  });
 
 function convertTimeStamp(timestamp, timezone){
     const convertTimezone = timezone / 3600;//convert second to hour
@@ -152,12 +155,12 @@ function getWeather() {
 
             //condition pour choisir l'image en fonction de la desciption météo
             if (weatherDescription.includes('rain')) {
-                weatherIcon.src = 'lien_vers_votre_image_de_pluie.gif';
+                weatherIcon.src = 'assets/img/rainy.gif';
             } else if (weatherDescription.includes('sunny')) {
-                weatherIcon.src = 'lien_vers_votre_image_de_soleil.gif';
+                weatherIcon.src = 'assets/img/sunny.gif';
             } else {
                 //par défaut afficher une autre image si la description n'est pas reconnue
-                weatherIcon.src = 'lien_vers_votre_image_par_défaut.gif';
+                weatherIcon.src = 'assets/img/clouds.gif';
             }
         })
         .catch(error => {
