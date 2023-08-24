@@ -27,7 +27,7 @@
 
 input{
     border: none;
-    background: #1e1e1e;
+    background: #555454;
     outline: none;
     color: #fff;
     padding: 0.5rem 2.5rem;
@@ -114,7 +114,7 @@ input::placeholder{
 .weather__card{
     display: flex;
     align-items: center;
-    background: #1e1e1e;
+    background: #555454;
     padding: 1rem;
     border-radius: 10px;
 }
