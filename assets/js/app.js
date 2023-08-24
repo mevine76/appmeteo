@@ -28,24 +28,25 @@ document.querySelector('.weather__search').addEventListener('submit', e => {
     getWeather();
     //clear form
     search.value = ""
+
 })
 
 //units
 document.querySelector('.weather_unit_celsius').addEventListener('click', () => {
-    if(units !== 'metric'){
-    //change to metric
-    units = "metric"
-    //get weather forecast
-    getWeather();
+    if (units !== 'metric') {
+        //change to metric
+        units = "metric"
+        //get weather forecast
+        getWeather();
     }
 })
 
 document.querySelector('.weather_unit_farenheit').addEventListener('click', () => {
-    if(units !== 'imperial'){
-    //change to imperial
-    units = "imperial"
-    //get weather forecast
-    getWeather();
+    if (units !== 'imperial') {
+        //change to imperial
+        units = "imperial"
+        //get weather forecast
+        getWeather();
     }
 })
 
@@ -99,13 +100,13 @@ document.querySelector('.weather_unit_farenheit').addEventListener('click', () =
 //     addToFavorites(cityName);
 //     displayFavorites();
 //  });
- 
+
 // // Exemple d'utilisation pour afficher les villes favorites au chargement de la page
 // document.addEventListener('DOMContentLoaded', () => {
 //     displayFavorites();
 //  });
 
-function convertTimeStamp(timestamp, timezone){
+function convertTimeStamp(timestamp, timezone) {
     const convertTimezone = timezone / 3600;//convert second to hour
 
     const date = new Date(timestamp * 1000);//convert second to millisecond
@@ -117,7 +118,7 @@ function convertTimeStamp(timestamp, timezone){
         year: "numeric",
         hour: "numeric",
         minute: "numeric",
-        timeZone: `Etc/GMT${convertTimezone >= 0 ? "-": "+"}${Math.abs(convertTimezone)}`,
+        timeZone: `Etc/GMT${convertTimezone >= 0 ? "-" : "+"}${Math.abs(convertTimezone)}`,
         hour12: true,
     }
     return date.toLocaleString("en-US", options);
@@ -132,6 +133,34 @@ function convertCountryCode(country) {
 
 function getWeather() {
     const API_KEY = '01ed09787471c3c54b3e051988071182';
+    const searchForm = document.getElementById('search-form');
+    const cityInput = document.getElementById('city-input');
+    const errorContainer = document.getElementById('error-container');
+    const weatherContainer = document.getElementById('weather-container');
+
+    searchForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const cityName = cityInput.value;
+
+        try {
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                errorContainer.style.display = 'none';
+                weatherContainer.innerHTML = `Temperature: ${data.main.temp} °C`;
+            } else {
+                errorContainer.style.display = 'block';
+                errorContainer.textContent = 'Ville non trouvée.';
+                weatherContainer.innerHTML = '';
+            }
+        } catch (error) {
+            console.error('recherche erronée:', error);
+            let errorMessage = "Une erreur s'est produite, veuillez réessayer plus tard.";
+            let errortest = document.getElementById('erreur');
+            errortest.innerHTML = errorMessage;
+        }
+    });
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${currCity}&appid=${API_KEY}&units=${units}`)
         .then(response => response.json())
@@ -145,7 +174,7 @@ function getWeather() {
             weather__minmax.innerHTML = `<p>Min ${data.main.temp_min.toFixed()}&#176</p><p>Max ${data.main.temp_max.toFixed()}&#176</p>`
             weather__realfeel.innerHTML = `${data.main.feels_like.toFixed()}&#176`
             weather__humidity.innerHTML = `${data.main.humidity}%`
-            weather__wind.innerHTML = `${data.wind.speed}${units === "imperial" ? " mph":" m/s"}`
+            weather__wind.innerHTML = `${data.wind.speed}${units === "imperial" ? " mph" : " m/s"}`
             weather__pressure.innerHTML = `${data.main.pressure} hpa`
 
             const weatherDescription = data.weather[0].main.toLowerCase();
@@ -158,9 +187,11 @@ function getWeather() {
                 weatherIcon.src = 'assets/img/rainy.gif';
             } else if (weatherDescription.includes('sunny')) {
                 weatherIcon.src = 'assets/img/sunny.gif';
+            } else if (weatherDescription.includes('clear')) {
+                weatherIcon.src = 'assets/img/clear.gif';
             } else {
                 //par défaut afficher une autre image si la description n'est pas reconnue
-                weatherIcon.src = 'assets/img/clouds.gif';
+                weatherIcon.src = 'assets/img/cloudy.gif';
             }
         })
         .catch(error => {

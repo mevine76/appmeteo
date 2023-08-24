@@ -8,13 +8,13 @@
 }
 
 .container{
-    /* background: #171717; */
-    background-image: url(/assets/img/clouds.gif);
+    background: #171717;
+    /* background-image: url(/assets/img/clouds.gif); */
     background-size: cover;
     background-repeat: no-repeat;
     color: #fff;
     padding: 2rem;
-    width: 40%;
+    width: 35%;
     margin: 4rem auto;
     border-radius: 10px;
 }
@@ -40,6 +40,13 @@ input::placeholder{
 
 .weather__search{
     position: relative;
+}
+
+#star{
+    width: 30px;
+    height: 30px;
+    margin-left: 110px;
+    margin-top: 10px;
 }
 
 .weather__search i{
@@ -80,7 +87,7 @@ input::placeholder{
 }
 
 .weather__icon img{
-    width: 100px;
+    width: 100%;
 }
 
 .weather__temperature{
